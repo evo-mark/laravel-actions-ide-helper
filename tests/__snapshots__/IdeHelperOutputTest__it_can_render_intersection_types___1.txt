@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Tests\stubs\IntersectionTypes;
+namespace EvoMark\LaravelActionsIdeHelper\Tests\stubs\IntersectionTypes;
 
 /**
  * @method static ?\stdClass run(\stdClass&\PhpParser\Node\Expr\Array_ $permissionable)

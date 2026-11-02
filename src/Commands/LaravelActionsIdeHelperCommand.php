@@ -1,40 +1,57 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Commands;
+namespace EvoMark\LaravelActionsIdeHelper\Commands;
 
+use EvoMark\LaravelActionsIdeHelper\Service\ActionInfoFactory;
+use EvoMark\LaravelActionsIdeHelper\Service\BuildIdeHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\File\LocalFile;
-use PhpParser\BuilderFactory;
-use PhpParser\PrettyPrinter\Standard;
-use ReflectionClass;
-use Riimu\Kit\PathJoin\Path;
-use Symfony\Component\Finder\Finder;
-use Wulfheart\LaravelActionsIdeHelper\ClassMapGenerator;
-use Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo;
-use Wulfheart\LaravelActionsIdeHelper\Service\ActionInfoFactory;
-use Wulfheart\LaravelActionsIdeHelper\Service\BuildIdeHelper;
-use Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock\AsObjectGenerator;
 
 class LaravelActionsIdeHelperCommand extends Command
 {
-    public $signature = 'ide-helper:actions';
+    public $signature = 'ide-helper:actions
+                        {--path=* : Directory to scan for actions (repeatable). Defaults to the "paths" config value}
+                        {--output= : File to write the helper to. Defaults to the "output" config value}';
 
     public $description = 'Generate a new IDE Helper file for Laravel Actions.';
 
-    public function handle()
+    public function handle(): int
     {
+        /** @var list<string> $paths */
+        $paths = array_values(array_filter(
+            (array) ($this->option('path') ?: config('actions-ide-helper.paths', ['app/Actions'])),
+            is_string(...)
+        ));
+        $outputOption = $this->option('output');
+        $output = is_string($outputOption) && $outputOption !== ''
+            ? $outputOption
+            : (string) config('actions-ide-helper.output', '_ide_helper_actions.php');
 
-        $actionsPath = Path::join(app_path() . '/Actions');
+        $actionInfos = [];
+        foreach ($paths as $path) {
+            $path = $this->absolute($path);
 
-        $outfile = Path::join(base_path(), '/_ide_helper_actions.php');
+            if (!is_dir($path)) {
+                $this->warn("Skipping missing directory: {$path}");
+                continue;
+            }
 
-        $actionInfos = ActionInfoFactory::create($actionsPath);
+            $actionInfos = array_merge($actionInfos, ActionInfoFactory::create($path));
+        }
 
-        $result = BuildIdeHelper::create()->build($actionInfos);
+        $outfile = $this->absolute($output);
 
-        file_put_contents($outfile, $result);
+        file_put_contents($outfile, BuildIdeHelper::create()->build($actionInfos));
 
-        $this->comment('IDE Helpers generated for Laravel Actions at ' . Str::of($outfile));
+        $this->comment('IDE Helpers generated for Laravel Actions at ' . Str::of($outfile)->toString());
+
+        return self::SUCCESS;
+    }
+
+    protected function absolute(string $path): string
+    {
+        $isAbsolute = Str::startsWith($path, ['/', '\\']) || preg_match('/^[A-Za-z]:[\\\\\/]/', $path) === 1;
+
+        return rtrim($isAbsolute ? $path : base_path($path), '/\\');
     }
 }

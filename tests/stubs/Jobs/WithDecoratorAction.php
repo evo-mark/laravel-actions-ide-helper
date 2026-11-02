@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Tests\stubs\Jobs;
+namespace EvoMark\LaravelActionsIdeHelper\Tests\stubs\Jobs;
 
 use Lorisleiva\Actions\Concerns\AsJob;
 
@@ -8,8 +8,7 @@ class WithDecoratorAction
 {
     use AsJob;
 
-    public function handle(){}
+    public function handle() {}
 
-    public function asJob(int $i):void{}
-
+    public function asJob(int $i): void {}
 }

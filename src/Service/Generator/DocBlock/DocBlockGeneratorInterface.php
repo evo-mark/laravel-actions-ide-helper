@@ -1,15 +1,15 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock;
+namespace EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock;
 
-use Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo;
+use EvoMark\LaravelActionsIdeHelper\Service\ActionInfo;
 
 interface DocBlockGeneratorInterface
 {
     public static function create(): self;
 
     /**
-     * @param  \Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo  $info
+     * @param  \EvoMark\LaravelActionsIdeHelper\Service\ActionInfo  $info
      * @return \phpDocumentor\Reflection\DocBlock\Tag[]
      */
     public function generate(ActionInfo $info): array;

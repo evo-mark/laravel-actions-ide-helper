@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Service;
+namespace EvoMark\LaravelActionsIdeHelper\Service;
 
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsCommand;
@@ -18,16 +18,15 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ActionInfoFactory
 {
-    /** @return array<\Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo> */
+    /** @return array<\EvoMark\LaravelActionsIdeHelper\Service\ActionInfo> */
     public static function create(string $path): array
     {
         $factory = new self();
         $classes = $factory->loadFromPath($path);
         $classMap = $factory->loadPhpDocumentorReflectionClassMap($path);
         $ais = [];
-        foreach ($classes as $class => $traits){
+        foreach ($classes as $class => $traits) {
             $tc = collect($traits);
-            $reflection = new \ReflectionClass($class);
             $ais[] = ActionInfo::create()
                 ->setName($class)
                 ->setAsObject($tc->contains(AsObject::class))
@@ -38,8 +37,6 @@ class ActionInfoFactory
                 ->setClassInfo($classMap[$class]);
         }
         return $ais;
-
-
     }
 
     /** @return array<class-string,array<class-string>> */
@@ -48,7 +45,7 @@ class ActionInfoFactory
         $res = Lody::classes($path)->isNotAbstract();
         /** @var array<class-string,array<class-string>> $traits */
         return collect(ActionInfo::ALL_TRAITS)
-            ->map(fn($trait, $key) => [$trait => $res->hasTrait($trait)->all()])
+            ->map(fn($trait) => [$trait => $res->hasTrait($trait)->all()])
             ->collapse()
             ->map(function ($item, $key) {
                 return collect($item)
@@ -68,18 +65,18 @@ class ActionInfoFactory
     /** @return array<\phpDocumentor\Reflection\Php\Class_>
      * @throws \phpDocumentor\Reflection\Exception
      */
-    protected function loadPhpDocumentorReflectionClassMap(string $path): array{
+    protected function loadPhpDocumentorReflectionClassMap(string $path): array
+    {
         $finder = Finder::create()->files()->in($path)->name('*.php');
         $files = collect($finder)->map(fn(SplFileInfo $file) => new LocalFile($file->getRealPath()))->toArray();
 
         /** @var \phpDocumentor\Reflection\Php\Project $project */
         $project = ProjectFactory::createInstance()->create('Laravel Actions IDE Helper', $files);
+        /** @psalm-suppress InvalidScalarArgument Laravel stubs type keys as int; they are class-name strings here */
         return collect($project->getFiles())
             ->map(fn(File $f) => $f->getClasses())
             ->collapse()
             ->mapWithKeys(fn($item, string $key) => [Str::of($key)->ltrim("\\")->toString() => $item])
             ->toArray();
-
     }
-
 }

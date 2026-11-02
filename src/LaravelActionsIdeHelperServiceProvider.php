@@ -1,13 +1,14 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper;
+namespace EvoMark\LaravelActionsIdeHelper;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Wulfheart\LaravelActionsIdeHelper\Commands\LaravelActionsIdeHelperCommand;
+use EvoMark\LaravelActionsIdeHelper\Commands\LaravelActionsIdeHelperCommand;
 
 class LaravelActionsIdeHelperServiceProvider extends PackageServiceProvider
 {
+    #[\Override]
     public function configurePackage(Package $package): void
     {
         /*
@@ -17,7 +18,7 @@ class LaravelActionsIdeHelperServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-actions-ide-helper')
-            // ->hasConfigFile()
+            ->hasConfigFile('actions-ide-helper')
             // ->hasViews()
             // ->hasMigration('create_laravel-actions-ide-helper_table')
             ->hasCommand(LaravelActionsIdeHelperCommand::class);

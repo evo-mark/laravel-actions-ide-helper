@@ -1,16 +1,14 @@
 <?php
 
-use Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock\DocBlockGeneratorBase;
-use Wulfheart\LaravelActionsIdeHelper\Tests\stubs\EmptyAction;
-use Wulfheart\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithDecoratorAction;
-use Wulfheart\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithoutDecoratorAction;
+use EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock\DocBlockGeneratorBase;
+use EvoMark\LaravelActionsIdeHelper\Tests\stubs\EmptyAction;
+use EvoMark\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithDecoratorAction;
+use EvoMark\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithoutDecoratorAction;
 
-it('cannot find a method that is not there', function() {
+it('cannot find a method that is not there', function () {
     $ai = $ai = getActionInfo(EmptyAction::class);
     $method = invade(new DocBlockGeneratorBase())->findMethod($ai, 'handle');
     expect($method)->toBeNull();
-
-
 });
 
 it('can find a method in the correct precedence', function () {

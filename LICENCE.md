@@ -1,6 +1,7 @@
 The MIT License (MIT)
 
-Copyright (c) Wulfheart <dev@alexfwulf.de>
+Fork Copyright (c) evoMark <github@evomark.co.uk>
+Original Copyright (c) Wulfheart <dev@alexfwulf.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

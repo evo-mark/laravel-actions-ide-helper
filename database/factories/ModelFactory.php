@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Database\Factories;
+namespace EvoMark\LaravelActionsIdeHelper\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

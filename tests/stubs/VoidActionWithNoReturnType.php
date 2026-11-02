@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Tests\stubs;
+namespace EvoMark\LaravelActionsIdeHelper\Tests\stubs;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -8,6 +8,5 @@ class VoidActionWithNoReturnType
 {
     use AsAction;
 
-    public function handle(){}
-
+    public function handle() {}
 }

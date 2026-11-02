@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Wulfheart\LaravelActionsIdeHelper\Service;
+namespace EvoMark\LaravelActionsIdeHelper\Service;
 
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -21,7 +21,7 @@ class BuildIdeHelper
     }
 
     /**
-     * @param  \Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo[]  $actionInfos
+     * @param  \EvoMark\LaravelActionsIdeHelper\Service\ActionInfo[]  $actionInfos
      */
     public function build(array $actionInfos): string
     {
@@ -32,7 +32,7 @@ class BuildIdeHelper
         $nodes = [];
         /**
          * @var string $namespace
-         * @var \Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo[] $items
+         * @var \EvoMark\LaravelActionsIdeHelper\Service\ActionInfo[] $items
          */
         $factory = new BuilderFactory();
         foreach ($groups as $namespace => $items) {
@@ -72,11 +72,6 @@ class BuildIdeHelper
         return (new TypeResolver())->resolve($type);
     }
 
-    protected function resolveAsUnionType(string ...$types): Type
-    {
-        return (new TypeResolver())->resolve(implode('|', $types));
-    }
-
     protected function getTraitIdeHelpers(BuilderFactory $factory): \PhpParser\Node
     {
         return $factory->namespace("Lorisleiva\Actions\Concerns")
@@ -110,8 +105,5 @@ class BuildIdeHelper
                 )
             )
             ->getNode();
-
-
     }
-
 }

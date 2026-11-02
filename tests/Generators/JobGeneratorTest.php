@@ -2,10 +2,10 @@
 
 use Lorisleiva\Actions\Decorators\JobDecorator;
 use Lorisleiva\Actions\Decorators\UniqueJobDecorator;
-use Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock\AsJobGenerator;
-use Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock\AsObjectGenerator;
-use Wulfheart\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithDecoratorAction;
-use Wulfheart\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithoutDecoratorAction;
+use EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock\AsJobGenerator;
+use EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock\AsObjectGenerator;
+use EvoMark\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithDecoratorAction;
+use EvoMark\LaravelActionsIdeHelper\Tests\stubs\Jobs\WithoutDecoratorAction;
 
 it('runs without an error', function (string $class, array $expectations) {
     $ai = getActionInfo($class);
@@ -21,13 +21,15 @@ it('runs without an error', function (string $class, array $expectations) {
 })->with([
     // Just one Method as an example
     'with decorator' => [
-        WithDecoratorAction::class, [
-            '@method static \\'.JobDecorator::class.'|\\'.UniqueJobDecorator::class.' makeJob(int $i)',
+        WithDecoratorAction::class,
+        [
+            '@method static \\' . JobDecorator::class . '|\\' . UniqueJobDecorator::class . ' makeJob(int $i)',
         ],
     ],
     'without decorator' => [
-        WithoutDecoratorAction::class, [
-            '@method static \\'.JobDecorator::class.'|\\'.UniqueJobDecorator::class.' makeJob()',
+        WithoutDecoratorAction::class,
+        [
+            '@method static \\' . JobDecorator::class . '|\\' . UniqueJobDecorator::class . ' makeJob()',
         ],
     ],
 

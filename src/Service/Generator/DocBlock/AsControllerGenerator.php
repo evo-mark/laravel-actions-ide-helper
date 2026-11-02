@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock;
+namespace EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock;
 
 use Lorisleiva\Actions\Concerns\AsController;
-use Wulfheart\LaravelActionsIdeHelper\Service\ActionInfo;
+use EvoMark\LaravelActionsIdeHelper\Service\ActionInfo;
 
 class AsControllerGenerator extends DocBlockGeneratorBase implements DocBlockGeneratorInterface
 {
@@ -12,6 +12,7 @@ class AsControllerGenerator extends DocBlockGeneratorBase implements DocBlockGen
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function generate(ActionInfo $info): array
     {
         return [];

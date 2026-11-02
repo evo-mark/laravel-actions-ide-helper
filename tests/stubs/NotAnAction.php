@@ -1,8 +1,5 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Tests\stubs;
+namespace EvoMark\LaravelActionsIdeHelper\Tests\stubs;
 
-class NotAnAction
-{
-
-}
+class NotAnAction {}

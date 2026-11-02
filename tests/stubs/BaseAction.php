@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Tests\stubs;
+namespace EvoMark\LaravelActionsIdeHelper\Tests\stubs;
 
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -8,7 +8,8 @@ use Lorisleiva\Actions\Concerns\AsObject;
 class BaseAction
 {
     use AsObject;
-    public function handle(): string {
+    public function handle(): string
+    {
         return "";
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wulfheart\LaravelActionsIdeHelper\Service\Generator\DocBlock\Custom;
+namespace EvoMark\LaravelActionsIdeHelper\Service\Generator\DocBlock\Custom;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\BaseTag;
@@ -24,10 +24,9 @@ class Method extends BaseTag
         protected ?Type $returnType = null,
         protected bool $static = false,
         protected ?Description $description = null
-    ) {
+    ) {}
 
-    }
-
+    #[\Override]
     public static function create(string $body)
     {
         // TODO: Implement create() method.
@@ -36,11 +35,11 @@ class Method extends BaseTag
     public function __toString(): string
     {
         $s = '';
-        if($this->static){
+        if ($this->static) {
             $s .= 'static ';
         }
 
-        if($this->returnType){
+        if ($this->returnType) {
             $s .= (string) $this->returnType . ' ';
         }
 
@@ -58,8 +57,9 @@ class Method extends BaseTag
     {
         $s = "";
         $type = $argument->getType();
+        /** @psalm-suppress RedundantCondition older reflection versions may return null */
         if ($type) {
-            $s .= (string) $type." ";
+            $s .= (string) $type . " ";
         }
 
         if ($argument->isVariadic()) {
@@ -70,9 +70,9 @@ class Method extends BaseTag
             $s .= "&";
         }
 
-        $s .= '$'.$argument->getName();
+        $s .= '$' . $argument->getName();
 
-        $default = $argument->getDefault(false);
+        $default = $argument->getDefault();
         if ($default !== null) {
             $s .= ' = ' . (string) $default;
         }

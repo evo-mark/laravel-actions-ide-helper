@@ -2,22 +2,36 @@
 
 This packages generates IDE helpers for [Laravel Actions v2](https://github.com/lorisleiva/laravel-actions). Feedback appreciated. Discussion at https://github.com/lorisleiva/laravel-actions/issues/117.
 
-## YOLO-ware
-
-As I don't use Laravel Actions anymore I decided to go into `YOLO-mode` with this project. That means:
-
-1. **No guarantees** 
-2. **Community-powered fixes**: Something doesn't work, you notice it you fix it.
-3. **Trust in the community:** I won't test your changes, either they do work or they don't. I just merge them.
-4. **Looking for a maintainer:** This situation is less than ideal. Therefore, I am looking for a new maintainer to take over this project. 
-
 ## Installation
 
 ```
-composer require --dev wulfheart/laravel-actions-ide-helper
+composer require --dev evo-mark/laravel-actions-ide-helper
 ```
 
 ## Usage
+
 ```
 php artisan ide-helper:actions
 ```
+
+By default this scans `app/Actions` and writes `_ide_helper_actions.php` in your project root.
+
+### Options
+
+Scan other directories or write elsewhere for a single run:
+
+```
+php artisan ide-helper:actions --path=app/Domain/Billing --path=modules/Users/Actions --output=_ide_helper_actions.php
+```
+
+`--path` can be repeated. Relative paths are resolved from your project root.
+
+### Configuration
+
+To change the defaults permanently, publish the config file:
+
+```
+php artisan vendor:publish --tag=actions-ide-helper-config
+```
+
+Then edit `paths` and `output` in `config/actions-ide-helper.php`. Command-line options override the config.
